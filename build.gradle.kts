@@ -20,3 +20,10 @@ tasks.withType<JavaExec>().configureEach {
     standardInput = System.`in`
     jvmArgs("-Dfile.encoding=UTF-8")
 }
+
+tasks.register<JavaExec>("runLibrary") {
+    group = "application"
+    description = "Библиотека"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("library.LibraryMainKt")
+}
