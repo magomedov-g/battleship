@@ -1,30 +1,21 @@
-fun printBothFields(player: Player, enemy: Player) = printBothFields(player.field, enemy.field)
+fun printBothFields(player: Player, enemy: Player) = printBothFields(player.field(), enemy.field())
 
 fun main() {
-    val player = Player()
-    player.name = "Вы"
-    val enemy = Player()
-    enemy.name = "Компьютер"
-    for (col in 2..5) player.field[3][col] = '#'
-    for (row in 5..7) enemy.field[row][7] = '#'
-    player.printField()
+    val player = Player("Вы")
+    val enemy = Player("Компьютер")
+    for (col in 2..5) player.placeShip(3, col)
+    for (row in 5..7) enemy.placeShip(row, 7)
+    player.markShot(3, 3, true)
+    player.markShot(4, 4, false)
     printBothFields(player, enemy)
-
     player.registerShot(true)
     player.registerShot(false)
     player.registerShot(true)
-    enemy.registerShot(false)
     player.printStats()
-    enemy.printStats()
-    println("Живы: ${player.isAlive()}, ${enemy.isAlive()}")
+    println("Выстрелов: ${player.shots}, попаданий: ${player.hits}")
     player.takeDamage()
-    player.takeDamage()
-    println("Палуб после двух попаданий: ${player.shipsLeft}")
     println("Жив: ${player.isAlive()}")
-    repeat(18) { player.takeDamage() }
-    println("После потери всех палуб: ${player.isAlive()}")
     player.reset()
-    println("После сброса:")
-    player.printStats()
-    player.printField()
+    println("После сброса: ${player.status()}")
+
 }
