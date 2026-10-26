@@ -18,7 +18,7 @@ application { mainClass.set("MainKt") }
 
 tasks.withType<JavaExec>().configureEach {
     standardInput = System.`in`
-    jvmArgs("-Dfile.encoding=UTF-8")
+    jvmArgs("-Dfile.encoding=UTF-8", "-Dstdout.encoding=UTF-8", "-Dstderr.encoding=UTF-8")
 }
 
 tasks.register<JavaExec>("runLibrary") {

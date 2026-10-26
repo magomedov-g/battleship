@@ -49,10 +49,14 @@ class Player(val name: String) {
         return true
     }
 
-    fun shoot(row: Int, col: Int): Boolean {
+    fun canShootAt(row: Int, col: Int): Boolean {
         if (!isInside(row, col)) return false
+        return _field[row][col] != CellState.HIT && _field[row][col] != CellState.MISS
+    }
+
+    fun shoot(row: Int, col: Int): Boolean {
+        if (!canShootAt(row, col)) return false
         val current = _field[row][col]
-        if (current == CellState.HIT || current == CellState.MISS) return false
         val hit = current == CellState.SHIP
         _field[row][col] = if (hit) CellState.HIT else CellState.MISS
         return hit
