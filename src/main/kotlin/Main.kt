@@ -1,21 +1,30 @@
+fun printBothFields(player: Player, enemy: Player) = printBothFields(player.field, enemy.field)
+
 fun main() {
-    val playerField = createEmptyField()
-    val enemyField = createEmptyField()
-    for (col in 2..5) playerField[3][col] = '#'
-    for (row in 5..7) enemyField[row][7] = '#'
-    enemyField[5][5] = 'X'
-    enemyField[5][6] = 'O'
+    val player = Player()
+    player.name = "Вы"
+    val enemy = Player()
+    enemy.name = "Компьютер"
+    for (col in 2..5) player.field[3][col] = '#'
+    for (row in 5..7) enemy.field[row][7] = '#'
+    player.printField()
+    printBothFields(player, enemy)
 
-    printField(playerField, "Ваше поле")
-    printField(enemyField, "Поле противника", showShips = false)
-    println()
-    printBothFields(playerField, enemyField)
-
-    println("\nПоле другого размера:")
-    printField(createEmptyField(size = 8), "Поле 8×8")
-    printField(createEmptyField(12), "Поле 12×12")
-    val smallField = createEmptyField(3)
-    smallField[1][1] = '#'
-    printField(smallField, "Отладка", debug = true)
-    printFields(listOf(smallField, createEmptyField(3)), listOf("Первое", "Второе"))
+    player.registerShot(true)
+    player.registerShot(false)
+    player.registerShot(true)
+    enemy.registerShot(false)
+    player.printStats()
+    enemy.printStats()
+    println("Живы: ${player.isAlive()}, ${enemy.isAlive()}")
+    player.takeDamage()
+    player.takeDamage()
+    println("Палуб после двух попаданий: ${player.shipsLeft}")
+    println("Жив: ${player.isAlive()}")
+    repeat(18) { player.takeDamage() }
+    println("После потери всех палуб: ${player.isAlive()}")
+    player.reset()
+    println("После сброса:")
+    player.printStats()
+    player.printField()
 }
